@@ -17,8 +17,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <NavBar/>
+      <body suppressHydrationWarning={true} className={inter.className}>
+        <NavBar />
         <main>{children}</main>
       </body>
     </html>
