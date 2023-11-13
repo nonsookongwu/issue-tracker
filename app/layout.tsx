@@ -11,11 +11,11 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-// const montserrat = Montserrat({
-//   subsets: ["latin"],
-//   weight: ["400", "500"],
-//   variable: "--font-montserrat",
-// });
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-montserrat",
+});
 
 export const metadata: Metadata = {
   title: "Issue tracka",
@@ -29,7 +29,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body suppressHydrationWarning={true} className={inter.variable}>
+      <body suppressHydrationWarning={true} className={montserrat.variable}>
         <Theme accentColor="pink" radius="small">
           <NavBar />
           <main className="p-5">{children}</main>
