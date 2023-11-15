@@ -1,5 +1,5 @@
 'use client';
-import { Button, Callout, TextArea, TextField } from '@radix-ui/themes'
+import { Button, Callout, Text, TextArea, TextField } from '@radix-ui/themes'
 import SimpleMDE from "react-simplemde-editor";
 import { Controller, useForm } from 'react-hook-form';
 import axios from 'axios';
@@ -10,6 +10,7 @@ import { InfoCircledIcon } from '@radix-ui/react-icons';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createIssueSchema } from '@/app/ValidationSchema';
 import { z } from 'zod'
+import ErrorMessage from '@/app/components/ErrorMessage';
 
 // interface IssuesForm{
 //   title: string;
@@ -50,14 +51,9 @@ const NewIssuePage = () => {
         <TextField.Root>
           <TextField.Input placeholder="Create issue" {...register("title")} />
         </TextField.Root>
-        {errors.title && (
-          <Callout.Root size={"1"} color="red" className="mb-7">
-            <Callout.Icon>
-              <InfoCircledIcon />
-            </Callout.Icon>
-            <Callout.Text>{errors.title.message}</Callout.Text>
-          </Callout.Root>
-        )}
+        <ErrorMessage>
+          {errors.title?.message}
+        </ErrorMessage>
 
         <Controller
           name="description"
@@ -66,14 +62,9 @@ const NewIssuePage = () => {
             <SimpleMDE placeholder="Description" {...field} />
           )}
         />
-        {errors.description && (
-          <Callout.Root size={"1"} color="red" className="mb-7">
-            <Callout.Icon>
-              <InfoCircledIcon />
-            </Callout.Icon>
-            <Callout.Text>{errors.description.message}</Callout.Text>
-          </Callout.Root>
-        )}
+        <ErrorMessage>
+          {errors.description?.message}
+        </ErrorMessage>
 
         <Button>Submit New Issue</Button>
       </form>
