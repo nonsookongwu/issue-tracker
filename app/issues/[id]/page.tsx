@@ -15,11 +15,12 @@ const IssuesDetailPage = async ({ params: { id } }: Props) => {
    const newIssue = await prisma.issue.findUnique({
         where:{id: +id}
    })
-    delay(2000)
+    
 
     if (!newIssue)
         notFound()
 
+   delay(5000);
   return (
       <div>
           <Heading>{newIssue.title}</Heading>

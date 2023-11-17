@@ -1,14 +1,22 @@
+import IssueBadge from '@/app/components/Badge';
+import { Card, Flex, Heading } from '@radix-ui/themes';
 import React from 'react'
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import ReactMarkdown from 'react-markdown'
 
 const IssueDetailsPageLoading = () => {
+    const newIssue = [1,2,3,4,5]
   return (
-    <div
-      className="inline-block h-8 w-8 animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-      role="status"
-    >
-      <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-        Loading...
-      </span>
+    <div className='max-w-xl'>
+      <Heading><Skeleton/></Heading>
+      <Flex gap={"5"} my={"4"}>
+        <Skeleton width={'5rem'}/>
+        <Skeleton width={'8rem'}/>
+      </Flex>
+      <Card className="prose" mt={"4"}>
+        <Skeleton count={3}/>
+      </Card>
     </div>
   );
 }
