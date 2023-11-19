@@ -1,18 +1,16 @@
 'use client';
-import { Button, Callout, Text, TextArea, TextField } from '@radix-ui/themes'
-// import SimpleMDE from "react-simplemde-editor";
-import dynamic from 'next/dynamic';
-import { Controller, useForm } from 'react-hook-form';
-import axios from 'axios';
-import "easymde/dist/easymde.min.css";
-import React, { useState } from 'react'
-import { useRouter } from 'next/navigation';
-import { InfoCircledIcon } from '@radix-ui/react-icons';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { createIssueSchema } from '@/app/ValidationSchema';
-import { z } from 'zod'
 import ErrorMessage from '@/app/components/ErrorMessage';
 import Spinner from '@/app/components/Spinner';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button, TextField } from '@radix-ui/themes';
+import axios from 'axios';
+import "easymde/dist/easymde.min.css";
+import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 
 type IssuesForm = z.infer<typeof createIssueSchema>
@@ -45,14 +43,7 @@ const NewIssuePage = () => {
 
   return (
     <div className="max-w-xl">
-      {/* {error && (
-        <Callout.Root size={"1"} color="red" className="mb-5">
-          <Callout.Icon>
-            <InfoCircledIcon />
-          </Callout.Icon>
-          <Callout.Text>{error}</Callout.Text>
-        </Callout.Root>
-      )} */}
+      
       <form
         className="max-w-xl space-y-3"
         onSubmit={handleSubmit(submitForm)}
