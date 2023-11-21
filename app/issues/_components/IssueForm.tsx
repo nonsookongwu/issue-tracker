@@ -19,8 +19,6 @@ const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
   ssr: false,
 });
 
-
-
 const IssueForm = ({ issue }: { issue?: Issue | null }) => {
   const router = useRouter();
 
@@ -38,8 +36,14 @@ const IssueForm = ({ issue }: { issue?: Issue | null }) => {
   const submitForm = async (data: IssuesFormData) => {
     try {
       setIsSubmitting(true);
-      await axios.post("/api/issues", data);
-      router.push("/issues");
+
+      if (issue) {
+        await axios.patch(`/api/issues/${issue.id}`, data);
+        router.push(`/issues/${issue.id}`)
+      } else {
+        await axios.post("/api/issues", data);
+        router.push("/issues");
+      }
     } catch (error) {
       setError("An unexpected error occured");
       setIsSubmitting(false);
@@ -70,7 +74,8 @@ const IssueForm = ({ issue }: { issue?: Issue | null }) => {
 
         <Button disabled={isSubmitting}>
           {" "}
-          Submit New Issue {isSubmitting && <Spinner />}
+          {issue ? "Update Issue" : "Submit New Issue"}{" "}
+          {isSubmitting && <Spinner />}
         </Button>
       </form>
     </div>
