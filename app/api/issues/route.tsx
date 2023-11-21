@@ -1,6 +1,5 @@
 import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
-
 import { createIssueSchema } from "../../ValidationSchema";
 
 interface Issue {
@@ -43,3 +42,4 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(error, { status: 500 });
   }
 }
+
