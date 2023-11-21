@@ -7,17 +7,17 @@ import { Issue } from "@prisma/client";
 import { Button, TextField } from "@radix-ui/themes";
 import axios from "axios";
 import "easymde/dist/easymde.min.css";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
+import SimpleMDE from 'react-simplemde-editor'
 
 type IssuesFormData = z.infer<typeof createIssueSchema>;
 
-const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
-  ssr: false,
-});
+// const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
+//   ssr: false,
+// });
 
 const IssueForm = ({ issue }: { issue?: Issue | null }) => {
   const router = useRouter();
