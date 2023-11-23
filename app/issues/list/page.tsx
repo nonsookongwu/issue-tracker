@@ -1,14 +1,11 @@
-import prisma from '@/prisma/client';
-import { Table } from '@radix-ui/themes';
-import IssueBadge from '../components/Badge';
-import CustomLink from '../components/Link';
-import IssuesActions from './IssuesActions';
+import prisma from "@/prisma/client";
+import { Table } from "@radix-ui/themes";
+import IssueBadge from "../../components/Badge";
+import CustomLink from "../../components/Link";
+import IssuesActions from "./IssuesActions";
 
 const IssuesPage = async () => {
-
   const issues = await prisma.issue.findMany();
- 
-
 
   return (
     <>
@@ -50,8 +47,8 @@ const IssuesPage = async () => {
       </Table.Root>
     </>
   );
-}
+};
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";
 
-export default IssuesPage
+export default IssuesPage;
