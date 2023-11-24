@@ -3,11 +3,13 @@ import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import React from 'react'
 import { FaUser } from 'react-icons/fa';
+import Skeleton from 'react-loading-skeleton';
+import "react-loading-skeleton/dist/skeleton.css";
 
 const AuthStatus = () => {
     const { status, data: session } = useSession();
 
-    if (status === 'loading') return null
+    if (status === 'loading') return <Skeleton width={'3rem'}/>
   return (
     <Box>
       {status === "authenticated" && (
