@@ -1,4 +1,4 @@
-import { createIssueSchema } from "@/app/ValidationSchema";
+import { createIssueSchema, updateIssueSchema } from "@/app/ValidationSchema";
 import authOptions from "@/app/auth/authOptions";
 import { getServerSession } from "next-auth";
 import prisma from "@/prisma/client";
@@ -18,10 +18,23 @@ export async function PATCH(request: NextRequest, { params: { id } }: { params: 
 
     const body: Issue = await request.json()
 
-    const validation = createIssueSchema.safeParse(body)
+    const validation = updateIssueSchema.safeParse(body)
     if (!validation.success) {
         return NextResponse.json({error: validation.error.format()}, {status: 400})
     }
+
+    const {title, description, assignedToUserId} = body
+
+    if (assignedToUserId) {
+      const user = await  prisma.user.findUnique({
+            where:{id:assignedToUserId}
+      })
+        
+        if (!user) {
+            return NextResponse.json({error: "invalid user"}, {status: 400})
+        }
+    }
+
 
     const issue = await prisma.issue.findUnique({
         where: {id: +id}
@@ -34,8 +47,9 @@ export async function PATCH(request: NextRequest, { params: { id } }: { params: 
     const updatedIssue = await prisma.issue.update({
         where: { id: issue?.id },
         data: {
-            title: body.title,
-            description: body.description,
+            title,
+            description,
+            assignedToUserId
            
         }
     })
