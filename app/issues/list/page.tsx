@@ -1,3 +1,4 @@
+
 import prisma from "@/prisma/client";
 import { Flex, Table } from "@radix-ui/themes";
 import IssueBadge from "../../components/Badge";
@@ -7,6 +8,7 @@ import IssueStatusFilter from "./IssueStatusFilter";
 import { Issue, Status } from "@prisma/client";
 import Link from "next/link";
 import { ArrowUpIcon } from "@radix-ui/react-icons";
+import { useState } from "react";
 
 interface Props {
   searchParams: { status: Status, orderBy: keyof Issue };
@@ -19,6 +21,7 @@ interface Columns {
 }
 
 const IssuesPage = async ({ searchParams }: Props) => {
+ 
   const columns: Columns[] = [
     { label: "Title", value: "title" },
     { label: "Status", value: "status", className: "hidden md:table-cell" },
@@ -29,15 +32,25 @@ const IssuesPage = async ({ searchParams }: Props) => {
     },
   ];
 
+  //validating status
   const statusArray = Object.values(Status);
-
   const validStatus = statusArray.includes(searchParams.status) ? searchParams.status : undefined;
 
+  //validating order
+  const sortArray = columns.map((column) => {
+    return column.value
+  })
+  const validSort = sortArray.includes(searchParams.orderBy)
+    ? { [searchParams.orderBy]: "asc" }
+    : undefined;
+
+  
+  //implementation
   const issues = await prisma.issue.findMany({
     where: { status: validStatus },
+    orderBy: validSort
   });
 
-  console.log(searchParams)
   
 
   return (
@@ -57,12 +70,7 @@ const IssuesPage = async ({ searchParams }: Props) => {
               >
                 {" "}
                 <Link
-                  href={
-                    // validStatus
-                    //   ? `/issues/list/?status=${validStatus}?orderBy${column.value}`
-                    //   : `/issues/list/?orderBy${column.value}`
-                     {query: {...searchParams, orderBy:column.value}}
-                  }
+                  href={{query: {...searchParams, orderBy:column.value}}}
                 >
                   {column.label}
                 </Link>{" "}
