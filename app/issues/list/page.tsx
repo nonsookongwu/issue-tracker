@@ -1,14 +1,13 @@
 
 import prisma from "@/prisma/client";
+import { Issue, Status } from "@prisma/client";
+import { ArrowUpIcon } from "@radix-ui/react-icons";
 import { Flex, Table } from "@radix-ui/themes";
+import Link from "next/link";
 import IssueBadge from "../../components/Badge";
 import CustomLink from "../../components/Link";
-import IssuesActions from "./IssuesActions";
 import IssueStatusFilter from "./IssueStatusFilter";
-import { Issue, Status } from "@prisma/client";
-import Link from "next/link";
-import { ArrowUpIcon } from "@radix-ui/react-icons";
-import { useState } from "react";
+import IssuesActions from "./IssuesActions";
 
 interface Props {
   searchParams: { status: Status, orderBy: keyof Issue };
