@@ -8,9 +8,10 @@ import IssueBadge from "../../components/Badge";
 import CustomLink from "../../components/Link";
 import IssueStatusFilter from "./IssueStatusFilter";
 import IssuesActions from "./IssuesActions";
+import Pagination from "@/app/components/Pagination";
 
 interface Props {
-  searchParams: { status: Status, orderBy: keyof Issue };
+  searchParams: { status: Status, orderBy: keyof Issue, page:string };
 }
 
 interface Columns {
@@ -45,10 +46,18 @@ const IssuesPage = async ({ searchParams }: Props) => {
 
   
   //implementation
+
+  const page = parseInt(searchParams.page) || 1
+  const pageSize = 10;
+
   const issues = await prisma.issue.findMany({
     where: { status: validStatus },
-    orderBy: validSort
+    orderBy: validSort,
+    skip: (page - 1) * pageSize,
+    take: pageSize
   });
+
+  const issuesCount = await prisma.issue.count({where: {status:validStatus}})
 
   
 
@@ -59,7 +68,7 @@ const IssuesPage = async ({ searchParams }: Props) => {
         <IssuesActions />
       </Flex>
 
-      <Table.Root variant="surface" className="max-w-xl">
+      <Table.Root variant="surface" className="max-w-xl mb-4">
         <Table.Header>
           <Table.Row>
             {columns.map((column) => (
@@ -101,6 +110,7 @@ const IssuesPage = async ({ searchParams }: Props) => {
           ))}
         </Table.Body>
       </Table.Root>
+      <Pagination currentPage={page} itemCount={issuesCount} pageSize={pageSize}/>
     </>
   );
 };
