@@ -4,7 +4,7 @@ import React from 'react'
 
 const IssuesActions = () => {
   return (
-    <div className="mb-5">
+    <div >
       <Button>
         <Link href={"/issues/new"}>New Issue</Link>
       </Button>
