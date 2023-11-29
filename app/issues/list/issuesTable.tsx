@@ -17,9 +17,11 @@ interface Props{
     searchParams: SearchParams
 }
 
+//className="max-w-xl"
+
 const IssuesTable = ({ issues, searchParams}:Props) => {
   return (
-    <Table.Root variant="surface" className="max-w-xl">
+    <Table.Root variant="surface" >
       <Table.Header>
         <Table.Row>
           {columns.map((column) => (

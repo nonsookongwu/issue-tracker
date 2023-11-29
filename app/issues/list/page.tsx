@@ -53,7 +53,7 @@ const IssuesPage = async ({ searchParams }: Props) => {
 
   return (
     <Flex direction={'column'} gap={'4'}>
-      <Flex justify={"between"} className="max-w-xl">
+      <Flex justify={"between"} >
         <IssueStatusFilter />
         <IssuesActions />
       </Flex>
