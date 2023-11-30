@@ -1,16 +1,34 @@
 import Image from 'next/image'
 import Pagination from './components/Pagination';
+import LatestIssues from './LatestIssues';
+import IssueSummary from './IssueSummary';
+import prisma from '@/prisma/client';
+import IssueChart from './IssueChart';
+import { Flex, Grid } from '@radix-ui/themes';
 
-interface Props{
-  searchParams: {page:string}
-}
 
-export default function Home({searchParams}:Props) {
+export default async function Home() {
+
+ const openIssues = await prisma.issue.count({where:{status:'OPEN'}})
+ const inProgressIssues = await prisma.issue.count({where:{status:'IN_PROGRESS'}})
+ const closedIssues = await prisma.issue.count({where:{status:'CLOSED'}})
+
   return (
-    <div>
-      <h1> Hello world</h1>
+    <Grid columns={{initial: '1', md: '2'}} gap={'3'}>
+      <Flex direction={'column'} gap={'3'}>
+        <IssueSummary
+          closed={closedIssues}
+          inProgress={inProgressIssues}
+          open={openIssues}
+          />
+        <IssueChart
+          closed={closedIssues}
+          inProgress={inProgressIssues}
+          open={openIssues}
+        />
+      </Flex>
+          <LatestIssues/>
 
-      <Pagination currentPage={+searchParams.page} itemCount={100} pageSize={10}/>
-    </div>
+    </Grid>
   );
 }
