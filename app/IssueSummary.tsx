@@ -25,10 +25,10 @@ const IssueSummary = ({ closed, inProgress, open }: Props) => {
 
 
   return (
-    <Flex gap={'4'}>
+    <Flex gap={'4'} direction={{initial: 'column', sm:'row'}}>
       {containers.map((container) => (
         <Card key={container.value}>
-          <Flex direction={'column'} gap={'1'}>
+          <Flex direction={{initial:'row', sm:'column'}} justify={{initial:'between', sm:'start'}} gap={'1'} >
             <Link className='text-sm font-medium' href={`/issues/list?status=${container.status}`}>
               {container.label}
             </Link>

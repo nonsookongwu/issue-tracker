@@ -21,12 +21,17 @@ const IssueChart = ({ closed, inProgress, open }: Props) => {
 
   return (
     <Card>
-      <BarChart data={data} width={600} height={300}>
-        {/* <BarChart /> */}
-        <XAxis dataKey={"name"} />
-        <YAxis />
-        <Bar dataKey={"value"} barSize={60} style={{fill: 'var(--accent-9)'}} />
-      </BarChart>
+      <ResponsiveContainer width={'100%'} height={300}>
+        <BarChart data={data}>
+          <XAxis dataKey={"name"} />
+          <YAxis />
+          <Bar
+            dataKey={"value"}
+            barSize={60}
+            style={{ fill: "var(--accent-9)" }}
+          />
+        </BarChart>
+      </ResponsiveContainer>
     </Card>
   );
 }

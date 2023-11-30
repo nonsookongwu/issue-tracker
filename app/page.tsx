@@ -4,6 +4,7 @@ import LatestIssues from './LatestIssues';
 import IssueSummary from './IssueSummary';
 import prisma from '@/prisma/client';
 import IssueChart from './IssueChart';
+import { Flex, Grid } from '@radix-ui/themes';
 
 
 export default async function Home() {
@@ -13,18 +14,21 @@ export default async function Home() {
  const closedIssues = await prisma.issue.count({where:{status:'CLOSED'}})
 
   return (
-    <div>
-      {/* <LatestIssues/> */}
-      <IssueSummary
-        closed={closedIssues}
-        inProgress={inProgressIssues}
-        open={openIssues}
-      />
-      <IssueChart
-        closed={closedIssues}
-        inProgress={inProgressIssues}
-        open={openIssues}
-      />
-    </div>
+    <Grid columns={{initial: '1', md: '2'}} gap={'3'}>
+      <Flex direction={'column'} gap={'3'}>
+        <IssueSummary
+          closed={closedIssues}
+          inProgress={inProgressIssues}
+          open={openIssues}
+          />
+        <IssueChart
+          closed={closedIssues}
+          inProgress={inProgressIssues}
+          open={openIssues}
+        />
+      </Flex>
+          <LatestIssues/>
+
+    </Grid>
   );
 }
